@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<!--apply attribute to html element-->
+<!--<html dat-ng-app>-->
+<html ng-app="todoApp">
+<head>
+   <title>TO DO List</title>
+   <link href="bootstrap.css" rel="stylesheet" />
+   <link href="bootstrap-theme.css" rel="stylesheet" />
+   <!--to include AngularJS to an HTML file, simply use script tag to import angular.js-->
+   <script src="angular.js"></script>
+   <!--create an Angular module using script tag-->
+   <script>
+      // define model
+      var model = {
+	 user: "Brenda",
+	 items: [{ action: "Buy Arduino", done: true},
+	          { action: "Finish AngularJS tutorials Step 8, 10 and 11", done: true},
+		  { action: "Start reading Intro. to Algo.", done: false},
+		  { action: "Request off for Christmas", done: false}]
+      };
+
+   var todoApp = angular.module("todoApp", []);
+
+   // Create controller
+   todoApp.controller("ToDoCtrl", function ($scope) {
+      $scope.todo = model;
+   
+   $scope.incompleteCount = function() {
+      var count = 0;
+      angular.forEach($scope.todo.items, function (item) {
+	 if (!item.done) {
+	    count++;
+	 }
+      });
+      return count;
+   }
+   
+   });
+
+</script>
+</head>
+<!--specify region of HTML doc that controller is responsible for-->
+<body ng-controller="ToDoCtrl">
+   <div class="page-header" >
+      <!--<h1>Brenda's To Do List</h1>-->
+      <!--data binding used to populate the HTML document with model data--> 
+      <h1>
+	 {{todo.user}}'s To Do List
+	 <spam class="label label-default" ng-hide="incompleteCount() == 0">{{incompleteCount()}}</spam>
+      </h1>
+   </div>
+   <div class="panel">
+      <div class="input-group">
+	<!-- <button class="btn btn-default">Add</button>-->
+	 <span class="form-control" />
+	 <span class="input-group-btn">
+	    <button class="btn btn-default">Add</button>
+	 </span>
+      </div><!--input-group end-->
+      <table class="table table-striped">
+	 <thead>
+	    <tr>
+	       <th>Description</th>
+	       <th>Done</th>
+	    </tr>
+	 </thead>
+	 <tbody>
+	    <!--ng-repeat attribute, applies DIRECTIVE telling AJS to generate the element it is applied to
+	    and its contents for each object in a collection-->
+	    <tr ng-repeat="item in todo.items">
+	       <td>{{item.action}}</td>
+	       <td><input type="checkbox" ng-model="item.done" /></td>
+	    </tr>
+	 </tbody>
+      </table>
+   </div><!--panel end-->
+</body>
+</html>
