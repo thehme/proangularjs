@@ -8,5 +8,5 @@ app.use(express.static(__dirname + '/angularjs')); //  "public" off of current i
 
 app.listen(port);
 console.log('Listening on port 8000');
-exports = module.exports = app;
+
 
